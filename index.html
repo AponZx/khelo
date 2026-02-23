@@ -86,12 +86,23 @@
         }
 
         async function register() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const { data, error } = await supabase.auth.signUp({ email, password });
-            if(error) alert(error.message);
-            else alert("Account created! You can now log in.");
+    alert("Button clicked! Checking connection..."); // TEST LINE 1
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    try {
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        
+        if (error) {
+            alert("Supabase Error: " + error.message);
+        } else {
+            alert("Account created! You can now log in.");
         }
+    } catch (err) {
+        alert("CRASH: " + err.message); // TEST LINE 2
+    }
+}
 
         async function logout() {
             await supabase.auth.signOut();
